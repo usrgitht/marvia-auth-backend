@@ -1,7 +1,7 @@
 {
-  "name": "render-login-api",
+  "name": "marvia-auth-backend",
   "version": "1.0.0",
-  "description": "Backend for login feature, deployable on Render.",
+  "description": "Backend for Marvia App Auth Login feature",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -10,8 +10,6 @@
     "express": "^4.19.2"
   },
   "engines": {
-    "node": ">=14.x"
-  },
-  "author": "AI Generator",
-  "license": "MIT"
+    "node": ">=14.0.0"
+  }
 }
