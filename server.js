@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware to parse JSON request bodies
+// Middleware to parse JSON bodies
 app.use(express.json());
 
 // GET /health endpoint for Render health checks
@@ -19,38 +19,32 @@ app.post('/v1/auth/login', (req, res) => {
     return res.status(400).json({ message: 'Email and password are required' });
   }
 
-  // The client expects the endpoint to be /v1/auth/login.
-  // The original client contract specified 'https://api.marvia.app/v1/auth/login' as the full URL,
-  // but the server path should only be '/v1/auth/login'.
-  // The previous issue was likely due to the client calling a different base URL than the server's path.
-  // Assuming the `marvia-auth-backend.onrender.com` is the base URL and the client appends the path `/v1/auth/login`,
-  // the server's route definition `/v1/auth/login` is correct for the path part.
+  // --- This is where actual authentication logic would go ---
+  // In a real application, you would:
+  // 1. Query a database to find a user by email.
+  // 2. Hash the provided password and compare it with the stored hash.
+  // 3. Generate a JWT token if credentials are valid.
+  // 4. Return user data (without sensitive info like password hash).
 
-  // --- DUMMY AUTHENTICATION LOGIC --- 
-  // In a real application, you would: 
-  // 1. Query a database for the user by email.
-  // 2. Hash the provided password and compare it to the stored hashed password.
-  // 3. Generate a real JWT token.
-  // For this example, we'll simulate a successful login with dummy data.
-  
-  if (email === 'john.doe@example.com' && password === 'securePassword123') {
-    // Simulate a JWT token
-    const dummyToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiAxMjMsImVtYWlsIjogImpvaG4uZG9lQGV4YW1wbGUuY29tIiwiaWF0IjogMTY3ODkwNTYwMH0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
-    // Simulate user object
+  // For this mock implementation, we'll simulate a successful login
+  // and generate a dummy token and user object.
+  if (email === 'user@example.com' && password === 'password123') {
+    const dummyToken = `mock-jwt-token-for-${email}`;
     const dummyUser = {
-      id: '123',
-      email: 'john.doe@example.com',
-      firstName: 'John',
-      lastName: 'Doe'
+      id: 'mock-user-123',
+      email: email,
+      username: 'Example User',
+      roles: ['user']
+      // Add other user details as needed
     };
 
-    res.status(200).json({
+    return res.status(200).json({
       token: dummyToken,
       user: dummyUser
     });
   } else {
-    // Invalid credentials
-    res.status(401).json({ message: 'Invalid credentials' });
+    // Simulate invalid credentials
+    return res.status(401).json({ message: 'Invalid email or password' });
   }
 });
 
