@@ -2,48 +2,52 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware pour parser le corps des requêtes en JSON
+// Middleware to parse JSON request bodies
 app.use(express.json());
 
-// Endpoint de santé pour Render
+// GET /health endpoint for Render health checks
 app.get('/health', (req, res) => {
   res.status(200).send('OK');
 });
 
-// Endpoint POST /v1/auth/login
+// POST /v1/auth/login endpoint
 app.post('/v1/auth/login', (req, res) => {
   const { email, password } = req.body;
 
-  // Validation basique des champs
+  // Basic validation
   if (!email || !password) {
     return res.status(400).json({ message: 'Email and password are required' });
   }
 
-  // NOTE: Dans un cas réel, vous devriez:
-  // 1. Vérifier les identifiants dans une base de données.
-  // 2. Hacher les mots de passe.
-  // 3. Générer un JWT (JSON Web Token) sécurisé.
-  // Ici, nous simulons une réponse réussie.
+  // --- DUMMY AUTHENTICATION LOGIC --- 
+  // In a real application, you would: 
+  // 1. Query a database for the user by email.
+  // 2. Hash the provided password and compare it to the stored hashed password.
+  // 3. Generate a real JWT token.
+  // For this example, we'll simulate a successful login with dummy data.
+  
+  if (email === 'john.doe@example.com' && password === 'securePassword123') {
+    // Simulate a JWT token
+    const dummyToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiAxMjMsImVtYWlsIjogImpvaG4uZG9lQGV4YW1wbGUuY29tIiwiaWF0IjogMTY3ODkwNTYwMH0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+    // Simulate user object
+    const dummyUser = {
+      id: '123',
+      email: 'john.doe@example.com',
+      firstName: 'John',
+      lastName: 'Doe'
+    };
 
-  // Simulation d'une authentification réussie
-  if (email === 'user@example.com' && password === 'MySecretPassword123') {
-    // Générer un token bidon pour l'exemple
-    const token = 'fake-jwt-token-for-' + btoa(email);
-    const user = { id: 'user123', email: email, name: 'Example User' };
-    
-    return res.status(200).json({ token, user });
+    res.status(200).json({
+      token: dummyToken,
+      user: dummyUser
+    });
   } else {
-    // Simulation d'une authentification échouée
-    return res.status(401).json({ message: 'Invalid credentials' });
+    // Invalid credentials
+    res.status(401).json({ message: 'Invalid credentials' });
   }
 });
 
-// Gérer les routes non trouvées (404)
-app.use((req, res) => {
-  res.status(404).json({ message: 'Not Found' });
-});
-
-// Écouter sur le port configuré par Render ou 3000 localement
+// Start the server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
