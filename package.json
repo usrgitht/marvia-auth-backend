@@ -1,7 +1,7 @@
 {
-  "name": "marvia-auth-backend",
+  "name": "auth-service",
   "version": "1.0.0",
-  "description": "Backend for Marvia App Auth Login feature",
+  "description": "Backend for user login functionality",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -9,6 +9,7 @@
   "dependencies": {
     "express": "^4.19.2"
   },
+  "devDependencies": {},
   "engines": {
     "node": ">=14.0.0"
   }
