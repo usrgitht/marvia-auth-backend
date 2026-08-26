@@ -1,0 +1,17 @@
+{
+  "name": "render-login-api",
+  "version": "1.0.0",
+  "description": "Backend for login feature, deployable on Render.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=14.x"
+  },
+  "author": "AI Generator",
+  "license": "MIT"
+}
